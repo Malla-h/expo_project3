@@ -1,20 +1,45 @@
-import React from "react";
-import { StyleSheet, View, Text, Button, Touchable } from "react-native";
-import { TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
-const Produto = () => {
+const Produto = ({ productName, quantity, onConfirm, onDeny }) => {
+  const [isConfirmed, setIsConfirmed] = useState(false);
+
+  const handleConfirm = () => {
+    setIsConfirmed(true);
+    onConfirm(productName);
+  };
+
+  const handleDeny = () => {
+    onDeny(productName);
+  };
+
   return (
     <View style={styles.item}>
-      <Text style={styles.itemText}>Item 1</Text>
+      <Text style={[styles.itemText, isConfirmed && styles.strikethrough]}>
+        {productName}
+      </Text>
+      <Text style={styles.quantity}>Quantidade: {quantity}</Text>
       <View style={styles.confirmDenyContainer}>
-        <TouchableOpacity style={styles.itemConfirm}></TouchableOpacity>
-        <TouchableOpacity style={styles.itemDeny}></TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.itemConfirm, isConfirmed && styles.disabled]}
+          onPress={handleConfirm}
+          disabled={isConfirmed}
+        ></TouchableOpacity>
+        <TouchableOpacity
+          style={styles.itemDeny}
+          onPress={handleDeny}
+        ></TouchableOpacity>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  quantity: {
+    color: "purple",
+    marginLeft: "auto",
+    paddingHorizontal: 20,
+  },
   item: {
     backgroundColor: "lightblue",
     borderRadius: 7,
@@ -44,7 +69,6 @@ const styles = StyleSheet.create({
     borderColor: "purple",
     paddingRight: 0,
   },
-
   itemText: {
     color: "purple",
     fontSize: 18,
@@ -53,6 +77,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: 90,
+  },
+  strikethrough: {
+    textDecorationLine: "line-through",
+    color: "gray",
+  },
+  disabled: {
+    opacity: 0.5,
   },
 });
 

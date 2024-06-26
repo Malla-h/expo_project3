@@ -13,11 +13,17 @@ const App = () => {
     setTasks([...tasks, task]);
   };
 
+  const handleRemoveTask = (productName) => {
+    setTasks(tasks.filter((task) => task.product !== productName));
+  };
+
   return (
     <NavigationContainer>
       <MyStack.Navigator screenOptions={{ headerShown: false }}>
         <MyStack.Screen name="TelaLista">
-          {(props) => <TelaLista {...props} tasks={tasks} />}
+          {(props) => (
+            <TelaLista {...props} tasks={tasks} onRemove={handleRemoveTask} />
+          )}
         </MyStack.Screen>
         <MyStack.Screen name="TelaAdicionar">
           {(props) => <TelaAdicionar {...props} onAddTask={handleAddTask} />}

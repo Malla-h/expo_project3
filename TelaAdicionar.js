@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 
 const TelaAdicionar = ({ navigation, onAddTask }) => {
@@ -37,11 +38,23 @@ const TelaAdicionar = ({ navigation, onAddTask }) => {
   }, []);
 
   const handleAddTask = () => {
+    // Validate quantity input
+    if (!isNumeric(quantity)) {
+      Alert.alert(
+        "Erro",
+        "Por favor, insira um valor numérico para a quantidade."
+      );
+      return;
+    }
+
     const task = { product, quantity };
     onAddTask(task);
-    // Optionally, you can reset the input fields after adding the task
-    setProduct("");
+    setProduct(""); // Clear input fields after adding task
     setQuantity("");
+  };
+
+  const isNumeric = (value) => {
+    return !isNaN(parseFloat(value)) && isFinite(value);
   };
 
   return (
@@ -61,6 +74,7 @@ const TelaAdicionar = ({ navigation, onAddTask }) => {
           placeholder={"Quantidade:"}
           onChangeText={(text) => setQuantity(text)}
           value={quantity}
+          keyboardType="numeric" // Ensure numeric keyboard
         />
 
         <TouchableOpacity onPress={handleAddTask}>

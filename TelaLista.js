@@ -2,25 +2,42 @@ import React from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 import Produto from "./components/produto";
 
-const TelaAdicionar = (props) => {
+const TelaLista = ({ navigation, tasks, onRemove }) => {
+  const handleConfirm = (productName) => {    
+    console.log(`Confirmed: ${productName}`);
+  };
+
+  const handleDeny = (productName) => {
+    
+    onRemove(productName);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
         <Text style={styles.title}>Lista de Produtos</Text>
       </View>
-      <Produto />
-      <Produto />
-      <Produto />
+
+      {tasks.map((task, index) => (
+        <Produto
+          key={index}
+          productName={task.product}
+          quantity={task.quantity}
+          onConfirm={handleConfirm}
+          onDeny={handleDeny}
+        />
+      ))}
+
       <View style={styles.bottomContainer}>
         <View style={styles.buttonWrapper}>
           <Button
-            onPress={() => props.navigation.navigate("TelaAdicionar")}
+            onPress={() => navigation.navigate("TelaAdicionar")}
             title="Adicionar"
           />
         </View>
         <View style={styles.buttonWrapper}>
           <Button
-            onPress={() => props.navigation.navigate("TelaLista")}
+            onPress={() => navigation.navigate("TelaLista")}
             title="Ver"
           />
         </View>
@@ -34,7 +51,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     paddingVertical: 40,
-    backgroundColor: "black",
     backgroundColor: "gray",
     borderWidth: 3,
     borderColor: "purple",
@@ -49,11 +65,8 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: 20,
   },
-
   buttonWrapper: {
     flex: 1,
-    // borderWidth: 2,
-    // borderColor: "white",
     width: "100%",
   },
   topContainer: {
@@ -72,4 +85,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TelaAdicionar;
+export default TelaLista;
