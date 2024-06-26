@@ -1,22 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import "@expo/metro-runtime";
-
+import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
 import TelaLista from "./TelaLista";
 import TelaAdicionar from "./TelaAdicionar";
 
-// create a "stack"
 const MyStack = createNativeStackNavigator();
 
 const App = () => {
+  const [tasks, setTasks] = useState([]);
+
+  const handleAddTask = (task) => {
+    setTasks([...tasks, task]);
+  };
+
   return (
     <NavigationContainer>
-      <MyStack.Navigator>
-        <MyStack.Screen name="TelaLista" component={TelaLista} />
-        <MyStack.Screen name="TelaAdicionar" component={TelaAdicionar} />
+      <MyStack.Navigator screenOptions={{ headerShown: false }}>
+        <MyStack.Screen name="TelaLista">
+          {(props) => <TelaLista {...props} tasks={tasks} />}
+        </MyStack.Screen>
+        <MyStack.Screen name="TelaAdicionar">
+          {(props) => <TelaAdicionar {...props} onAddTask={handleAddTask} />}
+        </MyStack.Screen>
       </MyStack.Navigator>
     </NavigationContainer>
   );
