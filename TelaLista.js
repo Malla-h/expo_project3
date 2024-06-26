@@ -3,13 +3,14 @@ import { View, Text, Button, StyleSheet } from "react-native";
 import Produto from "./components/produto";
 
 const TelaLista = ({ navigation, tasks, onRemove }) => {
-  const handleConfirm = (productName) => {    
+  const handleConfirm = (productName) => {
+    // Implement your confirmation logic here if needed
     console.log(`Confirmed: ${productName}`);
   };
 
-  const handleDeny = (productName) => {
-    
-    onRemove(productName);
+  const handleDeny = (id) => {
+    // Call onRemove with the productId to remove the specific product instance
+    onRemove(id);
   };
 
   return (
@@ -18,9 +19,10 @@ const TelaLista = ({ navigation, tasks, onRemove }) => {
         <Text style={styles.title}>Lista de Produtos</Text>
       </View>
 
-      {tasks.map((task, index) => (
+      {tasks.map((task) => (
         <Produto
-          key={index}
+          key={task.id} // Use a unique identifier (id) as the key
+          id={task.id} // Pass id as a prop to identify the specific product instance
           productName={task.product}
           quantity={task.quantity}
           onConfirm={handleConfirm}
@@ -51,9 +53,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     paddingVertical: 40,
-    backgroundColor: "gray",
-    borderWidth: 3,
-    borderColor: "purple",
+    backgroundColor: "#e5e7eb",
   },
   bottomContainer: {
     flexDirection: "row",
@@ -71,16 +71,15 @@ const styles = StyleSheet.create({
   },
   topContainer: {
     flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    borderWidth: 3,
-    marginVertical: 20,
+    justifyContent: "left",
+    alignItems: "left",
+    margin: 20,
   },
   title: {
     flex: 1,
-    textAlign: "center",
+    textAlign: "left",
     fontSize: 30,
-    color: "purple",
+    color: "black",
     fontWeight: "bold",
   },
 });

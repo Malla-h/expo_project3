@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
-const Produto = ({ productName, quantity, onConfirm, onDeny }) => {
+const Produto = ({ id, productName, quantity, onConfirm, onDeny }) => {
   const [isConfirmed, setIsConfirmed] = useState(false);
 
   const handleConfirm = () => {
-    setIsConfirmed(true);
     onConfirm(productName);
+    setIsConfirmed(true);
   };
 
   const handleDeny = () => {
-    onDeny(productName);
+    onDeny(id);
   };
 
   return (
@@ -20,15 +20,14 @@ const Produto = ({ productName, quantity, onConfirm, onDeny }) => {
       </Text>
       <Text style={styles.quantity}>Quantidade: {quantity}</Text>
       <View style={styles.confirmDenyContainer}>
-        <TouchableOpacity
-          style={[styles.itemConfirm, isConfirmed && styles.disabled]}
-          onPress={handleConfirm}
-          disabled={isConfirmed}
-        ></TouchableOpacity>
-        <TouchableOpacity
-          style={styles.itemDeny}
-          onPress={handleDeny}
-        ></TouchableOpacity>
+        <TouchableOpacity style={styles.itemConfirm} onPress={handleConfirm}>
+          {/* Add a checkmark or any indicator for confirmation */}
+          {isConfirmed && <Text style={styles.confirmText}>✓</Text>}
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.itemDeny} onPress={handleDeny}>
+          {/* Add a cross or any indicator for denial */}
+          <Text style={styles.denyText}>✕</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -41,15 +40,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   item: {
-    backgroundColor: "lightblue",
+    backgroundColor: "#ffffff",
     borderRadius: 7,
-    height: 40,
+    height: 60,
     marginHorizontal: 20,
     marginVertical: 10,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     paddingStart: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 }, 
+    shadowOpacity: 0.2,
+    shadowRadius: 2, 
   },
   itemConfirm: {
     backgroundColor: "green",
@@ -58,7 +61,8 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     borderWidth: 2,
     borderColor: "purple",
-    padding: 0,
+    justifyContent: "center",
+    alignItems: "center",
   },
   itemDeny: {
     backgroundColor: "red",
@@ -67,7 +71,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 2,
     borderColor: "purple",
-    paddingRight: 0,
+    justifyContent: "center",
+    alignItems: "center",
   },
   itemText: {
     color: "purple",
@@ -76,14 +81,20 @@ const styles = StyleSheet.create({
   confirmDenyContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+    marginRight: 10,
     width: 90,
   },
   strikethrough: {
     textDecorationLine: "line-through",
     color: "gray",
   },
-  disabled: {
-    opacity: 0.5,
+  confirmText: {
+    color: "white",
+    fontSize: 20,
+  },
+  denyText: {
+    color: "white",
+    fontSize: 20,
   },
 });
 

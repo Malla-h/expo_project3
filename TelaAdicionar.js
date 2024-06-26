@@ -107,7 +107,7 @@ const TelaAdicionar = ({ navigation, onAddTask }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "gray",
+    backgroundColor: "#e5e7eb",
   },
   writeTaskWrapper: {
     flex: 1,
@@ -120,10 +120,25 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     backgroundColor: "#FFF",
     borderRadius: 15,
-    borderColor: "#b3e0fa",
-    borderWidth: 2,
+    borderColor: "gray",
+    borderWidth: 1,
     width: "90%",
     marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    ...Platform.select({
+      ios: {
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
   },
   addWrapper: {
     width: 160,
@@ -144,16 +159,17 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     flexDirection: "row",
-    width: "100%",
-    height: 60,
-    justifyContent: "center",
+    justifyContent: "space-around",
     alignItems: "center",
+    marginBottom: 20,
     position: "absolute",
     bottom: 0,
+    width: "100%",
+    paddingHorizontal: 20,
   },
   buttonWrapper: {
     flex: 1,
-    width: "50%",
+    width: "100%",
   },
 });
 

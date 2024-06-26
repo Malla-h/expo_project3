@@ -10,11 +10,13 @@ const App = () => {
   const [tasks, setTasks] = useState([]);
 
   const handleAddTask = (task) => {
-    setTasks([...tasks, task]);
+    // Generate a unique id for the task
+    const newTask = { ...task, id: tasks.length + 1 }; // Replace with a suitable unique id method
+    setTasks([...tasks, newTask]);
   };
 
-  const handleRemoveTask = (productName) => {
-    setTasks(tasks.filter((task) => task.product !== productName));
+  const handleRemoveTask = (id) => {
+    setTasks(tasks.filter((task) => task.id !== id));
   };
 
   return (
